@@ -2,16 +2,16 @@ import swaggerUI, { SwaggerOptions } from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import { Application } from 'express';
 import path from 'path';
-import { paths } from '@/routes/swagger_paths'
+import { paths } from '@/routes/swagger_paths';
 
 export const initSwagger = (app: Application) => {
   const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Neth API',
+        title: 'NETH API',
         version: '1.0.0',
-        description: 'Neth API swagger',
+        description: 'NETH API swagger',
       },
       servers: [{ url: 'http://localhost:8080' }],
       components: {
