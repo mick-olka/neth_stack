@@ -1,20 +1,19 @@
 import * as homeService from '@/service/home';
+import { catchAsync } from '@/utils/catchAsync';
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-/**
- * Gets the API information.
- *
- * @param {Request} req
- * @param {Response} res
- */
-export const getAppInfo = (req: Request, res: Response) => {
-  const result = homeService.getAppInfo();
+export const getAppInfo = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = homeService.getAppInfo();
 
-  res.json(result);
-};
+    res.json(result);
+  },
+);
 
-export const getMainPage = (req: Request, res: Response) => {
-  //
-  res.render('index', { title: 'Main' });
-};
+export const getMainPage = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    //
+    res.render('index', { title: 'Main' });
+  },
+);

@@ -9,6 +9,18 @@ import routes from '@/routes';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import sassMiddleware from 'node-sass-middleware';
+import { initSwagger } from '@/swagger';
+
+const whitelist = ['localhost:8080', '192.168.0.103:8080'];
+const corsOptionsDelegate = function (req: any, callback: any) {
+  let corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
 
 export const createApp = (): express.Application => {
   const app = express();
@@ -27,8 +39,8 @@ export const createApp = (): express.Application => {
       sourceMap: true,
     }),
   );
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(cors());
+  app.use(express.static(path.join(__dirname, '../public')));
+  app.use(cors(corsOptionsDelegate));
   app.use(helmet());
   app.use(morgan('dev')); //  logging
   app.use(express.json()); //  expects request data to be sent in JSON format, which often resembles a simple JS object
@@ -36,6 +48,7 @@ export const createApp = (): express.Application => {
 
   // API Routes
   app.use('/', routes);
+  initSwagger(app);
 
   // Error Middleware
   app.use(errorHandler.genericErrorHandler);

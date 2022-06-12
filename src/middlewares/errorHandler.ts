@@ -47,6 +47,5 @@ export const genericErrorHandler = (
   }
 
   const error = errors.buildError(err);
-
   res.status(error.code).json({ error });
 };
