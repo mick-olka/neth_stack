@@ -1,5 +1,5 @@
 /**
- * Application Information response strucuture.
+ * Application Information response structure.
  */
 interface AppInformation {
   NAME: string;

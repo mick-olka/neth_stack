@@ -52,3 +52,23 @@
                 PORT: 8080
       500:
         description: Error
+/write/?text=string:
+  get:
+    description: Write query params in file and return result.
+    parameters:
+    - name: "text"
+      in: "query"
+      description: "Text to be written"
+      required: true
+      type: "string"
+    responses:
+      '200':    # status code
+        description: A JSON string of text
+        content:
+          application/json:
+            schema:
+              type: string
+            example:
+              "string from file"
+      '500': # status code
+        description: Some Error

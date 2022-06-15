@@ -5,14 +5,15 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import sassMiddleware from 'node-sass-middleware';
 import routes from '@/routes';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import sassMiddleware from 'node-sass-middleware';
+
 import { initSwagger } from '@/swagger';
 
 const whitelist = ['localhost:8080', '192.168.0.103:8080'];
-const corsOptionsDelegate = function (req: any, callback: any) {
+const corsOptionsDelegate = (req: any, callback: any) => {
   let corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
@@ -22,6 +23,7 @@ const corsOptionsDelegate = function (req: any, callback: any) {
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export const createApp = (): express.Application => {
   const app = express();
 
@@ -43,8 +45,10 @@ export const createApp = (): express.Application => {
   app.use(cors(corsOptionsDelegate));
   app.use(helmet());
   app.use(morgan('dev')); //  logging
-  app.use(express.json()); //  expects request data to be sent in JSON format, which often resembles a simple JS object
-  app.use(express.urlencoded({ extended: true })); //  expects request data to be sent encoded in the URL, usually in strings or arrays
+  //  expects request data to be sent in JSON format, which often resembles a simple JS object
+  app.use(express.json());
+  //  expects request data to be sent encoded in the URL, usually in strings or arrays
+  app.use(express.urlencoded({ extended: true }));
 
   // API Routes
   app.use('/', routes);

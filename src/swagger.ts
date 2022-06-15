@@ -24,7 +24,7 @@ export const initSwagger = (app: Application) => {
         },
       },
       security: [{ bearerAuth: [] }],
-      paths: paths,
+      paths,
     },
     apis: [path.resolve(__dirname, './routes/index.ts')],
   };

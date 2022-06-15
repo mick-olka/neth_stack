@@ -26,6 +26,7 @@ module.exports = {
       },
     ],
     'no-unused-vars': 'warn',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {

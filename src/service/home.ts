@@ -6,6 +6,5 @@ import CONFIG from '@/config';
  *
  * @returns {AppInformation}
  */
-export const getAppInfo = (): AppInformation => {
-  return CONFIG.APP;
-};
+// eslint-disable-next-line import/prefer-default-export
+export const getAppInfo = (): AppInformation => CONFIG.APP;
